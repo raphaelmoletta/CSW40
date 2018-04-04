@@ -1,0 +1,6 @@
+".\Objects\main41.obj",
+".\Objects\main42.obj",
+".\Objects\main43.obj",
+".\Objects\main44.obj" 
+TO ".\Objects\Tarefa4" 
+PRINT(".\Listings\Tarefa4.m51") RAMSIZE(256) 

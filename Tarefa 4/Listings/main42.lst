@@ -1,0 +1,26 @@
+A51 MACRO ASSEMBLER  MAIN42                                                               04/04/2018 11:40:57 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\main42.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE main42.a51 SET(SMALL) DEBUG PRINT(.\Listings\main42.lst) OBJECT(.\Objec
+                      ts\main42.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0000h
+                       2     END
+A51 MACRO ASSEMBLER  MAIN42                                                               04/04/2018 11:40:57 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
