@@ -1,7 +1,7 @@
-A51 MACRO ASSEMBLER  MAIN43                                                               04/04/2018 11:40:57 PAGE     1
+A51 MACRO ASSEMBLER  MAIN43                                                               04/10/2018 20:27:57 PAGE     1
 
 
-MACRO ASSEMBLER A51 V8.02c
+MACRO ASSEMBLER A51 V8.2.7.0
 OBJECT MODULE PLACED IN .\Objects\main43.obj
 ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE main43.a51 SET(SMALL) DEBUG PRINT(.\Listings\main43.lst) OBJECT(.\Objec
                       ts\main43.obj) EP
@@ -10,20 +10,53 @@ LOC  OBJ            LINE     SOURCE
 
 0000                   1     ORG 0000h
                        2     
-0000                   3     reset:
-0000 D294              4             SETB P1.4       ; Apaga o LED 1
-0002 D2B6              5             SETB P3.6       ; Apaga o LED 2
-0004 D2B7              6             SETB P3.7       ; Apaga o LED 3
-0006 7820              7             MOV R0, #20h
-0008 7400              8             MOV A, #0       ; Zera o acumulador
-                       9             
-000A 04               10             INC A           ; Adiciona o acumulador
-                      11             
-000B F520             12             MOV 20h, A
-                      13             ;JB 20.0h, reset
-                      14     
-                      15     END
-A51 MACRO ASSEMBLER  MAIN43                                                               04/04/2018 11:40:57 PAGE     2
+0000 D294              3             SETB P1.4       ; Apaga o LED 1
+0002 D2B6              4             SETB P3.6       ; Apaga o LED 2
+0004 D2B7              5             SETB P3.7       ; Apaga o LED 3
+0006                   6     begin:
+0006 7807              7         MOV R0, #7h         ; Inicializa o acomulador
+                       8     
+0008                   9     loop:
+0008 7407             10             MOV A, #7h
+000A 98               11             SUBB A, R0
+000B F5F0             12             MOV B, A
+000D 20F004           13             JB B.0, pos0
+0010 D294             14             SETB P1.4
+0012 8002             15             SJMP next0
+0014                  16     pos0:
+0014 C294             17             CLR P1.4
+0016                  18     next0:
+0016 20F104           19             JB B.1, pos1
+0019 D2B6             20             SETB P3.6
+001B 8002             21             SJMP next1
+001D                  22     pos1:
+001D C2B6             23             CLR P3.6
+001F                  24     next1:
+001F 20F204           25             JB B.2, pos2
+0022 D2B7             26             SETB P3.7
+0024 8002             27             SJMP next2
+0026                  28     pos2:
+0026 C2B7             29             CLR P3.7
+0028                  30     next2:
+0028 E9               31             mov A, R1
+0029 E530             32             mov A, 30h 
+002B 7944             33             mov R1, #44h
+002D E7               34             mov A, @R1
+002E 7419             35             mov A, #25
+                      36             
+0030                  37     linhadecima:
+0030 8001             38             sjmp pulaum
+0032 00               39             nop
+0033                  40     pulaum:
+0033 93               41             movc A, @A+DPTR
+                      42             
+0034 D8D2             43             DJNZ R0, loop
+0036 80CE             44             SJMP begin
+                      45             ;MOVX @R0, A
+                      46             ;JB 20.0h, reset
+                      47             
+                      48     END
+A51 MACRO ASSEMBLER  MAIN43                                                               04/10/2018 20:27:57 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -31,9 +64,19 @@ SYMBOL TABLE LISTING
 
 N A M E             T Y P E  V A L U E   ATTRIBUTES
 
+B. . . . . . . . .  D ADDR   00F0H   A   
+BEGIN. . . . . . .  C ADDR   0006H   A   
+LINHADECIMA. . . .  C ADDR   0030H   A   
+LOOP . . . . . . .  C ADDR   0008H   A   
+NEXT0. . . . . . .  C ADDR   0016H   A   
+NEXT1. . . . . . .  C ADDR   001FH   A   
+NEXT2. . . . . . .  C ADDR   0028H   A   
 P1 . . . . . . . .  D ADDR   0090H   A   
 P3 . . . . . . . .  D ADDR   00B0H   A   
-RESET. . . . . . .  C ADDR   0000H   A   
+POS0 . . . . . . .  C ADDR   0014H   A   
+POS1 . . . . . . .  C ADDR   001DH   A   
+POS2 . . . . . . .  C ADDR   0026H   A   
+PULAUM . . . . . .  C ADDR   0033H   A   
 
 
 REGISTER BANK(S) USED: 0 
