@@ -982,7 +982,7 @@ ARM Macro Assembler    Page 16
 erwork --depend=.\objects\startup.d -o.\objects\startup.o -I.\RTE\_TM4C1294XL -
 IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129 -IC:\Keil_v5\AR
 M\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA
- 524" --predefine="TM4C1294NCPDT SETA 1" --list=.\listings\startup.lst startup.
+ 525" --predefine="TM4C1294NCPDT SETA 1" --list=.\listings\startup.lst startup.
 s
 
 

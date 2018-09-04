@@ -1,0 +1,176 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; Exemplo.s
+    2 00000000         ; Desenvolvido para a placa EK-TM4C1294XL
+    3 00000000         ; Prof. Guilherme Peron
+    4 00000000         ; 12/03/2018
+    5 00000000         
+    6 00000000         ; ------------------------------------------------------
+                       -------------------------
+    7 00000000                 THUMB                        ; Instruções do tip
+                                                            o Thumb-2
+    8 00000000         ; ------------------------------------------------------
+                       -------------------------
+    9 00000000         ; Declarações EQU - Defines
+   10 00000000         ;<NOME>         EQU <VALOR>
+   11 00000000         ; ------------------------------------------------------
+                       -------------------------
+   12 00000000         ; Área de Dados - Declarações de variáveis
+   13 00000000                 AREA             DATA, ALIGN=2
+   14 00000000         ; Se alguma variável for chamada em outro arquivo
+   15 00000000         ;EXPORT  <var> [DATA,SIZE=<tam>]   ; Permite chamar a va
+                       riável <var> a 
+   16 00000000         ; partir de outro arquivo
+   17 00000000         ;<var> SPACE <tam>                        ; Declara uma 
+                       variável de nome <var>
+   18 00000000         ; de <tam> bytes a partir da primeira 
+   19 00000000         ; posição da RAM  
+   20 00000000 00 00 00 
+              00 00 00 
+              00 00 00 
+              00       vetor   SPACE            10
+   21 0000000A         ; ------------------------------------------------------
+                       -------------------------
+   22 0000000A         ; Área de Código - Tudo abaixo da diretiva a seguir será
+                        armazenado na memória de 
+   23 0000000A         ;                  código
+   24 0000000A                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+   25 00000000         
+   26 00000000         ; Se alguma função do arquivo for chamada em outro arqui
+                       vo 
+   27 00000000                 EXPORT           Start       ; Permite chamar a 
+                                                            função Start a part
+                                                            ir de 
+   28 00000000         ; outro arquivo. No caso startup.s
+   29 00000000         
+   30 00000000         ; Se chamar alguma função externa 
+   31 00000000         ;IMPORT <func>              ; Permite chamar dentro dest
+                       e arquivo uma 
+   32 00000000         ; função <func>
+   33 00000000         
+   34 00000000         ; ------------------------------------------------------
+                       -------------------------
+   35 00000000         ; Função main()
+   36 00000000         Start
+   37 00000000         ; Comece o código aqui <================================
+                       ======================
+   38 00000000 F04F 0000       MOV              R0, #0      ;int i = 0
+   39 00000004 4A0C    for1    LDR              R2, =vetor  ;int *vetor = <memo
+                                                            ry position>
+   40 00000006 4402            ADD              R2, R2, R0
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   41 00000008 F102 0301       ADD              R3, R2, #1
+   42 0000000C F992 4000       LDRSB            R4, [R2]    ;int v0 = vetor[R2]
+                                                            
+   43 00000010 F993 5000       LDRSB            R5, [R3]
+   44 00000014 42AC            CMP              R4, R5
+   45 00000016 DC0A            BGT              replace
+   46 00000018         return
+   47 00000018 F100 0001       ADD              R0, #1
+   48 0000001C 2809            CMP              R0, #9
+   49 0000001E D1F1            BNE              for1
+   50 00000020 F04F 0000       MOV              R0, #0
+   51 00000024 2901            CMP              R1, #1
+   52 00000026 BF04            ITT              EQ
+   53 00000028 2100            MOVEQ            R1, #0
+   54 0000002A E7EB            BEQ              for1
+   55 0000002C BF00            NOP
+   56 0000002E         
+   57 0000002E 701C    replace STRB             R4, [R3]
+   58 00000030 7015            STRB             R5, [R2]
+   59 00000032 F04F 0101       MOV              R1, #1
+   60 00000036 E7EF            B                return
+   61 00000038         
+   62 00000038         
+   63 00000038                 ALIGN                        ; garante que o fim
+                                                             da seção está alin
+                                                            hada 
+   64 00000038                 END                          ; fim do arquivo
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_TM4C1294XL -IC:\Ke
+il_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129 -IC:\Keil_v5\ARM\CMSI
+S\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 525" 
+--predefine="TM4C1294NCPDT SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DATA 00000000
+
+Symbol: DATA
+   Definitions
+      At line 13 in file main.s
+   Uses
+      None
+Comment: DATA unused
+vetor 00000000
+
+Symbol: vetor
+   Definitions
+      At line 20 in file main.s
+   Uses
+      At line 39 in file main.s
+Comment: vetor used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 24 in file main.s
+   Uses
+      None
+Comment: .text unused
+Start 00000000
+
+Symbol: Start
+   Definitions
+      At line 36 in file main.s
+   Uses
+      At line 27 in file main.s
+Comment: Start used once
+for1 00000004
+
+Symbol: for1
+   Definitions
+      At line 39 in file main.s
+   Uses
+      At line 49 in file main.s
+      At line 54 in file main.s
+
+replace 0000002E
+
+Symbol: replace
+   Definitions
+      At line 57 in file main.s
+   Uses
+      At line 45 in file main.s
+Comment: replace used once
+return 00000018
+
+Symbol: return
+   Definitions
+      At line 46 in file main.s
+   Uses
+      At line 60 in file main.s
+Comment: return used once
+5 symbols
+343 symbols in table

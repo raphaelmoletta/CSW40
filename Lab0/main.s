@@ -36,29 +36,27 @@ vetor	SPACE 10
 Start  
 ; Comece o código aqui <======================================================
 		MOV 	R0, #0			;int i = 0
-		MOV 	R1, #1			;int j = 0
-		LDR 	R2, =vetor		;int *vetor = <memory position>
-for1	ADD		R3, R2, R0
-		LDRSB 	R6, [R3]		;int v1 = vetor[R2]
-			
-for2	ADD		R4, R2, R1
-		LDRSB 	R7, [R4]		;int v1 = vetor[R2]
-		
-		CMP		R6, R7			;if r6 > r7
-		BCS		replace
+for1	LDR 	R2, =vetor		;int *vetor = <memory position>
+		ADD		R2, R2, R0
+		ADD		R3, R2, #1
+		LDRSB 	R4, [R2]		;int v0 = vetor[R2]
+		LDRSB	R5, [R3]
+		CMP		R4, R5
+		BGT		replace
 return		
-		ADD		R1, R1, #1	
-		CMP		R1, #10
-		BNE		for2
-		
-		ADD		R0, R0, #1	
-		ADD		R1, R0, #1
-		CMP		R0, #10
+		ADD		R0, #1
+		CMP		R0, #9
 		BNE		for1
-		MOV 	R0, #100
+		MOV		R0, #0
+		CMP		R1, #1
+		ITT EQ	
+		MOVEQ	R1, #0
+		BEQ		for1
 		NOP
 
-replace	STR		
+replace	STRB	R4, [R3]
+		STRB	R5, [R2]
+		MOV		R1, #1
 		B 		return
 		
 		
